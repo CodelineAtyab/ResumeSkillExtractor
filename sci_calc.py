@@ -1,10 +1,9 @@
 import math
 
-
-def get_pow(base, exp):
-    return math.pow(base, exp)
-
+def multiply(num1, num2):
+    result = num1 * num2
+    return result
 
 # For unit tests
 if __name__ == "__main__":
-    print(get_pow(2, 3))
+    print(multiply(2, 3))
