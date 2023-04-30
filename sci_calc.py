@@ -1,5 +1,3 @@
-def hello_world():
-    return "Hello"
 
-
-print(hello_world())
+def diff(num1, num2):
+    return num1 - num2
