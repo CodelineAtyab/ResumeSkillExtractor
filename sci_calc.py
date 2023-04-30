@@ -3,6 +3,9 @@ import math
 def sum(a,b):
     return a+b
 
+def diff(num1, num2):
+    return num1 - num2
+
 def get_abs(x):
     return abs(x)
 
