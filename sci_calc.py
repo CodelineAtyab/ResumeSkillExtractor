@@ -21,6 +21,10 @@ def get_pow(base, exp):
     return math.pow(base, exp)
 
 
+def get_bin(n):
+    return (bin(n))
+
+
 def get_dividend(dividend, divisor):
     if divisor == 0:
         raise ValueError("Divisor cannot be zero")
@@ -32,7 +36,3 @@ if __name__ == "__main__":
     print(get_pow(2, 3))
     print(get_dividend(10, 2))
     # print(get_dividend(5, 0))
-
-
-def get_bin(n):
-    return (bin(n))
