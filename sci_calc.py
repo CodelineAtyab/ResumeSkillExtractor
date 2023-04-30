@@ -1,10 +1,13 @@
 import math
-
 def sum(a,b):
     return a+b
 
 def get_abs(x):
     return abs(x)
+
+def sqrt(num):
+    return math.sqrt(num)
+
 
 def get_pow(base, exp):
     return math.pow(base, exp)
