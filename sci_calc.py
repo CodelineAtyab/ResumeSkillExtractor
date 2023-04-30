@@ -1,5 +1,2 @@
-def hello_world():
-    return "Hello"
-
-
-print(hello_world())
+def sum(a,b):
+    return a+b
