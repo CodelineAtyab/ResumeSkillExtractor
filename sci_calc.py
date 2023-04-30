@@ -6,6 +6,6 @@ print(hello_world())
 
 
 def get_bin(n):
-    print(bin(n))
+    return(bin(n))
 
-get_bin(10)
+print(get_bin(10))
