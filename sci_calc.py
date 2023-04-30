@@ -1,3 +1,4 @@
+
 import math
 def sum(a,b):
     return a+b
@@ -16,3 +17,10 @@ def get_pow(base, exp):
 # For unit tests
 if __name__ == "__main__":
     print(get_pow(2, 3))
+
+
+
+def get_bin(n):
+    return(bin(n))
+
+
