@@ -3,3 +3,9 @@ def hello_world():
 
 
 print(hello_world())
+
+
+def get_bin(n):
+    print(bin(n))
+
+get_bin(10)
