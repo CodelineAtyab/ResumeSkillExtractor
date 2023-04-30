@@ -1,9 +1,3 @@
-def hello_world():
-    return "Hello"
-
-
-print(hello_world())
-
 
 def get_bin(n):
     return(bin(n))
