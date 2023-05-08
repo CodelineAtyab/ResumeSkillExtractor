@@ -1,6 +1,9 @@
 import os
 import time
 import traceback
+from threading import Thread
+from queue import Queue
+
 import streamlit as st
 
 
@@ -18,6 +21,17 @@ st.header("Developed by TheDynamicDoers")
 
 # Constants
 RESULT_FILE_DIRECTORY_NAME = "output_files"
+
+# Global Storage
+result_queue = Queue()
+task_queue = Queue()
+
+
+# Thread Targets
+def get_result_content(res_queue, res_filename):
+    while not os.path.exists(res_filename):
+        time.sleep(3)
+
 
 # Create if the directory doesn't exist.
 UPLOAD_FILE_DIRECTORY_NAME = "streamit_uploaded_files"
@@ -37,6 +51,7 @@ for curr_cv in list_of_uploaded_cvs:
             try:
                 with open(f"./{UPLOAD_FILE_DIRECTORY_NAME}/{curr_cv.name}", 'wb') as new_cv_file:
                     new_cv_file.write(curr_cv.read())
+                task_queue.put(curr_cv.name)
                 st.success(f"Uploaded {curr_cv.name} Successfully!")
             except Exception:
                 st.error(f"Unable to save {curr_cv.name}")
@@ -44,7 +59,13 @@ for curr_cv in list_of_uploaded_cvs:
 
 st.divider()
 
-if len(list_of_uploaded_cvs) > 0:
+if len(list_of_uploaded_cvs) > 0 and os.path.exists(RESULT_FILE_DIRECTORY_NAME):
+    # Start new threads to look for the available CVs in the result directory
+    result_reader_threads = []
+    while not task_queue.empty():
+        new_reader_thread = Thread(target=get_result_content, args=(result_queue, task_queue.get()))
+        result_reader_threads.append(new_reader_thread)
+
     # Download and display results for the previously selected files
     with st.spinner(f"Waiting for results!"):
         while True:
