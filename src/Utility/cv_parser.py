@@ -4,7 +4,6 @@ from pyresparser import ResumeParser
 
 import nltk
 
-
 # Download necessary NLTK resources if they haven't been downloaded already downloaded
 try:
     nltk.data.find('corpora/stopwords')
@@ -48,7 +47,8 @@ def parse_cv(path_to_cv):
         print(f"An error occurred:{traceback.format_exc()}")
 
 
-# For unit tests
+# This script demonstrates how to use the PDF CV parsing functionality
+# of the Resume Parser module to extract data from a PDF CV.
 if __name__ == "__main__":
-    cv_data = parse_cv('C:\\Users\\LAP-8\\Documents\\ResumeSkillExtractor\\src\\cv2.pdf')
+    cv_data = parse_cv('C:\\Users\\LAP-8\\Documents\\ResumeSkillExtractor\\examples\\cv1.pdf')
     print(cv_data)
