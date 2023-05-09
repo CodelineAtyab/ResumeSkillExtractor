@@ -1,7 +1,9 @@
+import traceback
+
 from pyresparser import ResumeParser
 
 import nltk
-import traceback
+
 
 # Download necessary NLTK resources if they haven't been downloaded already downloaded
 try:
@@ -37,14 +39,13 @@ def parse_cv(path_to_cv):
         # Use the get_extracted_data() method of the parser object to extract data from the CV
         extracted_data = parser.get_extracted_data()
 
-        # Return the extracted data as a dictionary
         return extracted_data
     except FileNotFoundError:
         print("Invalid file path. Please provide a valid path to a PDF file.")
     except ValueError:
         print("Invalid PDF file. Please provide a valid PDF file.")
     except Exception:
-        print(f"An error occurred:\n{traceback.format_exc()}")
+        print(f"An error occurred:{traceback.format_exc()}")
 
 
 # For unit tests
