@@ -2,7 +2,6 @@ import hashlib
 import os
 import time
 import traceback
-from queue import Queue
 
 import streamlit as st
 
@@ -23,13 +22,7 @@ st.header("Developed by TheDynamicDoers")
 RESULT_FILE_DIRECTORY_NAME = "output_files"
 
 # Global Storage
-task_queue = Queue()
-
-
-# Thread Targets
-def get_result_content(res_queue, res_filename):
-    while not os.path.exists(res_filename):
-        time.sleep(3)
+task_dict = dict()
 
 
 # Create if the directory doesn't exist.
@@ -52,7 +45,12 @@ for curr_cv in list_of_uploaded_cvs:
                     curr_cv_content = curr_cv.read()
                     curr_cv_content_hash = hashlib.sha256(curr_cv_content).hexdigest()
                     new_cv_file.write(curr_cv_content)
-                task_queue.put({"original_name": curr_cv.name, "sha256_content_hash": curr_cv_content_hash})
+                task_dict.update({
+                    curr_cv_content_hash: {
+                        "original_name": curr_cv.name,
+                        "sha256_content_hash": curr_cv_content_hash,
+                    }
+                })
                 st.success(f"Uploaded {curr_cv.name} Successfully!")
             except Exception:
                 st.error(f"Unable to save {curr_cv.name}")
@@ -60,24 +58,27 @@ for curr_cv in list_of_uploaded_cvs:
 
 st.divider()
 
-if len(list_of_uploaded_cvs) > 0 and os.path.exists(RESULT_FILE_DIRECTORY_NAME):
+if task_dict and os.path.exists(RESULT_FILE_DIRECTORY_NAME):
     st.header("This is what I found:")
-    # Start new threads to look for the available CVs in the result directory
-    # result_reader_threads = []
-    # while not task_queue.empty():
-    #     new_reader_thread = Thread(target=get_result_content, args=(result_queue, task_queue.get()))
-    #     result_reader_threads.append(new_reader_thread)
 
-    # wait_for_results = True
-    # # Download and display results for the previously selected files
-    # with st.spinner(f"Waiting for results!"):
-    #     while wait_for_results:
-    #         list_of_available_result_files = glob.glob(os.path.join(RESULT_FILE_DIRECTORY_NAME, "*.txt"))
-    #         if list_of_available_result_files:
-    #             for curr_res_file in list_of_available_result_files:
-    #                 with open(curr_res_file, "r") as curr_res_file_ptr:
-    #                     st.divider()
-    #                     st.write(f"Results for: {curr_res_file}")
-    #                     st.info(curr_res_file_ptr.read())
-    #
-    #         time.sleep(3)
+    # Download and display results for the previously selected files
+    wait_message = "Waiting for results!"
+
+    while task_dict:
+        with st.spinner(wait_message):
+            # Wait, so the user can see the message.
+            time.sleep(3)
+
+            # Copy task dict and then iterate it, so we can delete the processed elements from the original dict.
+            for curr_file_content_hash, task_desc_dict in dict(task_dict).items():
+                curr_res_file_path = os.path.join(RESULT_FILE_DIRECTORY_NAME, curr_file_content_hash+".txt")
+                try:
+                    with open(curr_res_file_path, "r") as curr_res_file:
+                        st.divider()
+                        st.write(f"Results for: {curr_file_content_hash}")
+                        st.info(curr_res_file.read())
+
+                        # Remove the processed element
+                        task_dict.pop(curr_file_content_hash)
+                except FileNotFoundError:
+                    wait_message = f"Waiting for {curr_file_content_hash}.txt file"
