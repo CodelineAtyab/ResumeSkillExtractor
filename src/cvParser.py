@@ -1,9 +1,17 @@
 from pyresparser import ResumeParser
 
 import nltk
+import traceback
 
-nltk.download('words')
-nltk.download('stopwords')
+# Download necessary NLTK resources if they haven't been downloaded already downloaded
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+try:
+    nltk.data.find('corpora/words')
+except LookupError:
+    nltk.download('words')
 
 
 def parse_cv(path_to_cv):
@@ -15,6 +23,7 @@ def parse_cv(path_to_cv):
 
     Returns:
     dict: A dictionary containing extracted data, including name, email, phone number, skills, work experience, education, and more.
+        or None if there is an Exception
 
     Raises:
     FileNotFoundError: If the provided file path is invalid or the file does not exist.
@@ -34,8 +43,8 @@ def parse_cv(path_to_cv):
         print("Invalid file path. Please provide a valid path to a PDF file.")
     except ValueError:
         print("Invalid PDF file. Please provide a valid PDF file.")
-    except Exception as e:
-        print(f"Error: {e}")
+    except Exception:
+        print(f"An error occurred:\n{traceback.format_exc()}")
 
 
 # For unit tests
