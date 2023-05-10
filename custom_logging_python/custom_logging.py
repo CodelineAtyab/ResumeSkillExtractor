@@ -1,5 +1,6 @@
 import logging
 import os
+
 from logging.config import fileConfig
 
 class CustomLogging:
@@ -69,3 +70,13 @@ class CustomLogging:
         if message is None:
             message = self.default_error_message
         self.logger.error(message)
+
+# Create an instance of the CustomLogging class and assign it to the app_logger variable.
+# This allows the application to use a custom logging interface with methods to log messages
+# at different levels of severity. By default, the CustomLogging class uses the logging_config.ini
+# file to configure the logging settings, and creates log files in the 'logs' directory if it
+# doesn't already exist. Once you have created an instance of the CustomLogging class, you can use
+# its info(), warning(), and error() methods to log messages in your application with the
+# appropriate level of severity.
+app_logger = CustomLogging()
+
