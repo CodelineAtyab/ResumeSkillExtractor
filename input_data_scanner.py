@@ -1,9 +1,10 @@
 import glob
 import queue
 
-class FileScanner:
+
+class QueuePopulater:
     """
-    A class to scan a directory for new files with a specified file extension
+    A class to populate a directory for new files with a specified file extension
     and add their file paths to a queue.
 
     Attributes:
@@ -11,10 +12,11 @@ class FileScanner:
     - cv_queue (queue.Queue): A queue to hold the paths of new files.
 
     Methods:
-    - scan(): Scans the directory for new files and calls add_file_to_queue for each new file.
+    - populate(): populates the directory for new files and calls add_file_to_queue for each new file.
     - add_file_to_queue(filepath): Adds a file path to the queue.
     """
-    def __init__(self, cv_queue):
+
+    def __init__(self, queue_to_populate):
         """
         Initializes a new instance of the FileScanner class.
 
@@ -25,7 +27,8 @@ class FileScanner:
 
         self.existing_files = set()
         # Create a queue to hold the paths of new files
-        self.cv_queue = cv_queue
+        self.cv_queue = queue_to_populate
+        self.populate()
 
     def add_to_queue(self, filepath):
         """
@@ -38,7 +41,7 @@ class FileScanner:
         print(f'Adding {filepath} to queue')
         self.cv_queue.put(filepath)
 
-    def scan(self):
+    def populate(self):
         """
         Scans the directory for new files and calls add_file_to_queue for each new file.
         """
@@ -62,8 +65,8 @@ class FileScanner:
 # Create an instance of the FileScanner and start it
 if __name__ == '__main__':
     # Create a queue to hold the paths of new files
-    cv_queue = queue.Queue()
+    incoming_cv_queue = queue.Queue()
     # Create an instance of the FileScanner class
-    scanner = FileScanner(cv_queue)
-    # Call the scan method to start scanning the directory for new files
-    scanner.scan()
+    populater = QueuePopulater(queue_to_populate=incoming_cv_queue)
+    # Call the populater method to start populating the directory for new files
+    populater.populate()
