@@ -18,7 +18,7 @@ class QueuePopulater:
 
     def __init__(self, queue_to_populate):
         """
-        Initializes a new instance of the FileScanner class.
+        Initializes a new instance of the QueuePopulater class.
 
         Args:
         - cv_queue (queue.Queue): A queue to hold the paths of new files.
@@ -62,10 +62,10 @@ class QueuePopulater:
             print('The specified directory was not found.')
 
 
-# Create an instance of the FileScanner and start it
+# Create an instance of the QueuePopulater and start it
 if __name__ == '__main__':
     # Create a queue to hold the paths of new files
     incoming_cv_queue = queue.Queue()
-    # Create an instance of the FileScanner class
+    # Create an instance of the QueuePopulater class
     populater = QueuePopulater(queue_to_populate=incoming_cv_queue)
 
