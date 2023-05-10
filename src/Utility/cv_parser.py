@@ -32,6 +32,7 @@ def parse_cv(path_to_cv):
     Exception: If any other error occurs while parsing the resume file.
     """
     try:
+
         # Create a ResumeParser object with the path to the PDF CV
         parser = ResumeParser(path_to_cv)
 
@@ -39,6 +40,7 @@ def parse_cv(path_to_cv):
         extracted_data = parser.get_extracted_data()
 
         return extracted_data
+    # TODO: add Logging Wrapper instead of using print statement
     except FileNotFoundError:
         print("Invalid file path. Please provide a valid path to a PDF file.")
     except ValueError:
