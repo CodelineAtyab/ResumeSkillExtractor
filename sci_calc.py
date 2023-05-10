@@ -22,7 +22,6 @@ if __name__ == "__main__":
     print(get_pow(2, 3))
 
 
-
 def get_bin(n):
     return(bin(n))
 
