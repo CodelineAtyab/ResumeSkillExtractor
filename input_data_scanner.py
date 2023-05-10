@@ -43,7 +43,7 @@ class QueuePopulater:
 
     def populate(self):
         """
-        Scans the directory for new files and calls add_file_to_queue for each new file.
+        populates the directory for new files and calls add_file_to_queue for each new file.
         """
         # Get a list of paths of all files with the desired file extension
         try:
@@ -68,5 +68,4 @@ if __name__ == '__main__':
     incoming_cv_queue = queue.Queue()
     # Create an instance of the FileScanner class
     populater = QueuePopulater(queue_to_populate=incoming_cv_queue)
-    # Call the populater method to start populating the directory for new files
-    populater.populate()
+
