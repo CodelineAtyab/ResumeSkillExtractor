@@ -17,7 +17,7 @@ This project implements a distributed task processing system using Redis Queue (
 
 ### Setup
 1. Clone the repository:
-2. Install required Python packages from requirements.txt
+2. Install required Python packages from requirements.txt: `pip install -r requirements.txt`
 
 ## Usage
 
