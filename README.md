@@ -22,7 +22,8 @@ This project implements a distributed task processing system using Redis Queue (
 ## Usage
 
 ### Starting Redis Server
-Ensure that the Redis server is running: redis-server
+Ensure that the Redis server is running. Use docker to run the container:  
+`docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest`
 
 ### Running the Producer
 Run the producer script to enqueue CV processing tasks: python producer.py
