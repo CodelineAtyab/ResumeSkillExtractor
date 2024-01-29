@@ -3,6 +3,8 @@
 ## Overview
 This project implements a distributed task processing system using Redis Queue (RQ) in Python. It's designed to process Curriculum Vitae (CV) data efficiently by utilizing a producer-consumer model. The system allows for multiple consumer workers to process CVs concurrently, improving throughput and scalability.
 
+![Alt text](images/system_design.svg)
+
 ## Features
 - **Asynchronous Task Processing**: Utilizes Redis Queue for managing asynchronous tasks.
 - **Scalable Architecture**: Easily scale by increasing the number of consumer workers.
