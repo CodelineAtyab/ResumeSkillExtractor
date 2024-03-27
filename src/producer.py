@@ -22,8 +22,8 @@ def all_jobs_done(list_of_jobs: list[Job]) -> bool:
     return True
 
 
-# TODO: Read CVs and put the content on the remote Queue, so it can be processed by the consumers
-cv_content_to_process = ["Javascript Developer", "Java Developer", "Python Developer", "C# Developer"]
+# TODO: Read CVs and put their filepath on the remote Queue, so it can be downloaded and processed by the consumers
+cv_content_to_process = ["https://aws_s3/sqa_cv_1.pdf", "https://aws_s3/dev_cv_1.pdf", "https://aws_s3/admin_cv_2.pdf"]
 
 list_of_scheduled_jobs = []
 for curr_content in cv_content_to_process:
