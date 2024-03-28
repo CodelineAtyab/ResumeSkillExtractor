@@ -1,5 +1,6 @@
 import time
 import redis
+import glob
 from rq import Queue
 from rq.job import Job
 
@@ -23,11 +24,12 @@ def all_jobs_done(list_of_jobs: list[Job]) -> bool:
 
 
 # TODO: Read CVs and put their filepath on the remote Queue, so it can be downloaded and processed by the consumers
-cv_content_to_process = ["https://aws_s3/sqa_cv_1.pdf", "https://aws_s3/dev_cv_1.pdf", "https://aws_s3/admin_cv_2.pdf"]
+# cv_content_to_process = ["https://aws_s3/sqa_cv_1.pdf", "https://aws_s3/dev_cv_1.pdf", ...]
+cv_files_to_process: list[str] = glob.glob("../cv_store/*.pdf")
 
 list_of_scheduled_jobs = []
-for curr_content in cv_content_to_process:
-    list_of_scheduled_jobs.append(STORAGE_QUEUE.enqueue(process_cv, curr_content))
+for curr_file_path in cv_files_to_process:
+    list_of_scheduled_jobs.append(STORAGE_QUEUE.enqueue(process_cv, curr_file_path))
 
 time_slept_in_secs = 0
 while not all_jobs_done(list_of_scheduled_jobs):
